@@ -6,6 +6,8 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 import { barHeight, readColors, type GeoFile, type Province, type Values } from './geo'
+import { Sea } from './sea'
+import { Ships } from './ships'
 
 type Props = {
   geo: GeoFile
@@ -103,12 +105,15 @@ function Scene({ geo, values, max, hovered, onHover, tooltip }: Props) {
   const colors = useColors()
   const reduced = useMemo(() => matchMedia('(prefers-reduced-motion: reduce)').matches, [])
   const group = useRef<THREE.Group>(null)
+  const narrow = useThree((s) => s.size.width < 640)
   useFrame(({ clock }) => {
     // Ayunan pelan agar peta terasa hidup; dimatikan untuk pengguna reduced motion.
     if (group.current && !reduced) group.current.rotation.y = Math.sin(clock.elapsedTime * 0.15) * 0.12
   })
   return (
     <group ref={group}>
+      <Sea color={colors.sea} ripple={colors.ripple} animate={!reduced} />
+      <Ships animate={!reduced} count={narrow ? 4 : 6} hull={colors.hull} />
       <Land geo={geo} hovered={hovered} onHover={onHover} colors={colors} />
       {geo.provinces.map((p) => (
         <Bar key={p.kode} p={p} height={barHeight(values[p.kode], max)} active={hovered === p.kode}
