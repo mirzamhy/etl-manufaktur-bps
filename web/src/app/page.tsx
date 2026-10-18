@@ -163,7 +163,7 @@ export default async function Landing() {
             Batas provinsi:{' '}
             <a className="underline hover:text-ink" href="https://github.com/denyherianto/indonesia-geojson-topojson-maps-with-38-provinces">Indonesia GeoJSON (38 Provinces)</a>,{' '}
             <a className="underline hover:text-ink" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, disederhanakan ·{' '}
-            <a className="underline hover:text-ink" href="https://github.com/mirzamhy/IAK-TM8">Kode sumber</a>
+            <a className="underline hover:text-ink" href="https://github.com/mirzamhy/etl-manufaktur-bps">Kode sumber</a>
           </p>
         </div>
       </footer>
