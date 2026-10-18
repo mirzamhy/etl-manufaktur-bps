@@ -19,6 +19,21 @@ const ROADS: { name: string; points: [number, number][]; trucks: number }[] = [
       [102.6, -0.6], [101.45, 0.5], [100.5, 1.6], [99.6, 2.6], [98.7, 3.5]],
     trucks: 3,
   },
+  {
+    name: 'Trans-Kalimantan',
+    points: [[109.4, -0.05], [110.6, 0.12], [111.5, 0.05], [112.4, -0.9], [113.2, -1.7], [113.92, -2.21],
+      [114.59, -3.25], [115.3, -2.55], [116.2, -1.85], [116.83, -1.22], [117.15, -0.5]],
+    trucks: 3,
+  },
+  {
+    name: 'Trans-Sulawesi',
+    points: [[119.45, -5.12], [119.62, -4.0], [120.15, -3.05], [120.6, -2.2], [120.75, -1.45], [120.3, -1.05], [119.88, -0.92]],
+    trucks: 2,
+  },
+  { name: 'Gorontalo – Manado', points: [[123.06, 0.55], [123.7, 0.72], [124.3, 0.92], [124.84, 1.45]], trucks: 1 },
+  { name: 'Gilimanuk – Denpasar', points: [[114.47, -8.2], [114.8, -8.4], [115.2, -8.62]], trucks: 1 },
+  { name: 'Sorong – Manokwari', points: [[131.3, -0.9], [132.3, -0.95], [133.2, -1.0], [134.0, -0.88]], trucks: 1 },
+  { name: 'Jayapura – Wamena', points: [[140.65, -2.6], [140.1, -3.0], [139.5, -3.6], [138.95, -4.1]], trucks: 1 },
 ]
 const LAND_TOP = 0.22 // sama dengan ketebalan daratan di indonesia-map.tsx
 const SPEED = 0.35
