@@ -23,6 +23,8 @@ export function readColors() {
     sea: dark ? '#1a2a38' : '#d9e3ea',
     ripple: dark ? '#335571' : '#f3f7fa',
     hull: dark ? '#5a6370' : '#3d4651',
+    road: dark ? '#7d7b70' : '#8f8a7c',
+    cab: dark ? '#d95926' : '#c94f30',
     bar: v('--series-1'),
     barHover: v('--series-2'),
     muted: v('--ink-3'),

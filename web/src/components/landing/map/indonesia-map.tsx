@@ -8,6 +8,7 @@ import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js
 import { barHeight, readColors, type GeoFile, type Province, type Values } from './geo'
 import { Sea } from './sea'
 import { Ships } from './ships'
+import { Trucks } from './trucks'
 
 type Props = {
   geo: GeoFile
@@ -114,6 +115,7 @@ function Scene({ geo, values, max, hovered, onHover, tooltip }: Props) {
     <group ref={group}>
       <Sea color={colors.sea} ripple={colors.ripple} animate={!reduced} />
       <Ships animate={!reduced} count={narrow ? 4 : 6} hull={colors.hull} />
+      <Trucks animate={!reduced} road={colors.road} cab={colors.cab} />
       <Land geo={geo} hovered={hovered} onHover={onHover} colors={colors} />
       {geo.provinces.map((p) => (
         <Bar key={p.kode} p={p} height={barHeight(values[p.kode], max)} active={hovered === p.kode}
