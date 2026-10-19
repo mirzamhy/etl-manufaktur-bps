@@ -48,7 +48,7 @@ export function ProduktivitasView({ rows }: { rows: Row[] }) {
   const padat = groups.find((g) => g.key === 'padat-karya')!.list
   const unggul = groups.find((g) => g.key === 'besar-produktif')!.list
   const insights = points.length ? [
-    <>Rata-rata nasional {fmtDec(yMid)} juta Rp per pekerja. <b className="text-ink">{titleCase(best[0].provinsi)}</b> tertinggi ({fmtDec(best[0].output_per_tk)} juta), {titleCase(best.at(-1)!.provinsi)} terendah ({fmtDec(best.at(-1)!.output_per_tk)} juta), selisih {fmtDec((best[0].output_per_tk ?? 0) / (best.at(-1)!.output_per_tk || 1))} kali.</>,
+    <>Rata-rata nasional {fmtDec(yMid)} juta Rp per pekerja per tahun. <b className="text-ink">{titleCase(best[0].provinsi)}</b> tertinggi ({fmtDec(best[0].output_per_tk)} juta), {titleCase(best.at(-1)!.provinsi)} terendah ({fmtDec(best.at(-1)!.output_per_tk)} juta), selisih {fmtDec((best[0].output_per_tk ?? 0) / (best.at(-1)!.output_per_tk || 1))} kali.</>,
     unggul.length
       ? <>Hanya {unggul.length} provinsi yang besar sekaligus produktif: <b className="text-ink">{unggul.map((d) => titleCase(d.provinsi)).join(', ')}</b>.</>
       : <>Tidak ada provinsi yang besar sekaligus di atas rata-rata produktivitas.</>,
@@ -78,12 +78,12 @@ export function ProduktivitasView({ rows }: { rows: Row[] }) {
             legend: { show: false },
             tooltip: { ...baseOption(t).tooltip, trigger: 'item', formatter: (p: { dataIndex: number }) => {
               const d = points.at(p.dataIndex)!
-              return `<b>${titleCase(d.provinsi)}</b><br>Tenaga kerja ${fmtInt(d.tenaga_kerja)} orang<br>Output per pekerja ${fmtDec(d.output_per_tk)} jt Rp<br>Jumlah usaha ${fmtInt(d.jumlah_perusahaan)}`
+              return `<b>${titleCase(d.provinsi)}</b><br>Tenaga kerja ${fmtInt(d.tenaga_kerja)} orang<br>Output per pekerja ${fmtDec(d.output_per_tk)} jt Rp/tahun<br>Jumlah usaha ${fmtInt(d.jumlah_perusahaan)}`
             } },
             grid: { left: 12, right: 32, top: 32, bottom: 40, containLabel: true },
             xAxis: { type: 'log', name: 'Tenaga kerja (orang)', nameLocation: 'middle', nameGap: 28, nameTextStyle: { color: t.ink3, fontSize: 12 },
               ...axis(t), axisLabel: { color: t.ink3, formatter: (v: number) => fmtCompact(v) } },
-            yAxis: { type: 'value', name: 'Output per pekerja (juta Rp)', nameTextStyle: { color: t.ink3, fontSize: 12, align: 'left' },
+            yAxis: { type: 'value', name: 'Output per pekerja per tahun (juta Rp)', nameTextStyle: { color: t.ink3, fontSize: 12, align: 'left' },
               ...axis(t), axisLabel: { color: t.ink3 } },
             series: [{
               type: 'scatter',

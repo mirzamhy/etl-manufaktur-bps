@@ -29,7 +29,7 @@ export function SkalaView({ rows }: { rows: Row[] }) {
 
   const insights = [
     <>Pada {tahun}, usaha mikro mencakup <b className="text-ink">{fmtPct(share('jumlah_perusahaan'))}</b> unit usaha dan {fmtPct(share('tenaga_kerja'))} tenaga kerja, tetapi hanya <b className="text-ink">{fmtPct(share('nilai_output'))}</b> nilai output.</>,
-    <>Output per tenaga kerja usaha kecil {fmtDec(kec.output_per_tk)} juta Rp/orang, sekitar <b className="text-ink">{fmtDec(mik.output_per_tk ? (kec.output_per_tk ?? 0) / mik.output_per_tk : null)} kali</b> usaha mikro ({fmtDec(mik.output_per_tk)} juta Rp/orang).</>,
+    <>Output per tenaga kerja usaha kecil {fmtDec(kec.output_per_tk)} juta Rp/orang per tahun, sekitar <b className="text-ink">{fmtDec(mik.output_per_tk ? (kec.output_per_tk ?? 0) / mik.output_per_tk : null)} kali</b> usaha mikro ({fmtDec(mik.output_per_tk)} juta Rp/orang).</>,
     <>Satu usaha kecil rata-rata mempekerjakan {fmtDec(kec.tk_per_usaha)} orang, sedangkan usaha mikro {fmtDec(mik.tk_per_usaha)} orang — usaha mikro umumnya dijalankan pemilik dengan sedikit pekerja.</>,
     <>Jumlah usaha kecil berubah {fmtPct(((kecLast.jumlah_perusahaan - kecFirst.jumlah_perusahaan) / kecFirst.jumlah_perusahaan) * 100)} dari {allYears[0]} ke {allYears.at(-1)}; kenaikan tahunan terbesar terjadi pada {jump.y} ({fmtPct(jump.d)}).</>,
   ]

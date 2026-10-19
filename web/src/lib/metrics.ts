@@ -9,8 +9,8 @@ export const METRIC: Record<Metric, { label: string; unit: string; money?: boole
   nilai_output: { label: 'Nilai output', unit: 'juta Rp', money: true },
   pengeluaran_tk: { label: 'Pengeluaran tenaga kerja', unit: 'juta Rp', money: true },
   nilai_tambah: { label: 'Nilai tambah', unit: 'juta Rp', money: true },
-  output_per_tk: { label: 'Output per tenaga kerja', unit: 'juta Rp/orang', ratio: true },
-  output_per_usaha: { label: 'Output per usaha', unit: 'juta Rp/unit', ratio: true },
+  output_per_tk: { label: 'Output per tenaga kerja', unit: 'juta Rp/orang/tahun', ratio: true },
+  output_per_usaha: { label: 'Output per usaha', unit: 'juta Rp/unit/tahun', ratio: true },
   tk_per_usaha: { label: 'Tenaga kerja per usaha', unit: 'orang/unit', ratio: true },
 }
 

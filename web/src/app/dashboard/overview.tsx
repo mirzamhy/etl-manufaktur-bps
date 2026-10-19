@@ -163,7 +163,7 @@ export function Overview({ rows }: { rows: Row[] }) {
                 <th className="pb-2 text-right font-medium">Usaha</th>
                 <th className="pb-2 text-right font-medium">Tenaga kerja</th>
                 <th className="w-[34%] pb-2 pl-6 font-medium">Porsi output</th>
-                <th className="pb-2 text-right font-medium">Output per pekerja</th>
+                <th className="pb-2 text-right font-medium">Output per pekerja per tahun</th>
               </tr>
             </thead>
             <tbody>
@@ -180,7 +180,7 @@ export function Overview({ rows }: { rows: Row[] }) {
                       <span className="w-12 text-right">{fmtPct(p.shareOutput)}</span>
                     </div>
                   </td>
-                  <td className="py-2.5 text-right">{fmtDec(p.output_per_tk)} jt Rp</td>
+                  <td className="py-2.5 text-right">{fmtDec(p.output_per_tk)} jt Rp/thn</td>
                 </tr>
               ))}
             </tbody>
