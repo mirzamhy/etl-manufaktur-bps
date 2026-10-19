@@ -74,7 +74,7 @@ export function BiayaView({ rows }: { rows: Row[] }) {
                   name, type: 'bar', stack: 'total', barMaxWidth: 30,
                   data: list.map((b) => split(b.a).at(i)),
                   itemStyle: { color: t.series.at(i), borderColor: t.surface, borderWidth: 2 },
-                  label: { show: true, color: '#fff', fontSize: 12, fontWeight: 600, formatter: (p: { value: number }) => (p.value >= 8 ? `${Math.round(p.value)}%` : '') },
+                  label: { show: true, color: '#fff', fontSize: 12, fontWeight: 600, formatter: (p: { value: number }) => (p.value >= 4 ? `${Math.round(p.value)}%` : '') },
                 })),
               }
             }}

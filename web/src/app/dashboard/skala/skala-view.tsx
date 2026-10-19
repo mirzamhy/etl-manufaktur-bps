@@ -63,7 +63,7 @@ export function SkalaView({ rows }: { rows: Row[] }) {
                   data: cats.map((k) => (i === 0 ? share(k) : 100 - share(k))),
                   itemStyle: { color: t.series[i], borderColor: t.surface, borderWidth: 2, borderRadius: i === 0 ? [4, 0, 0, 4] : [0, 4, 4, 0] },
                   label: { show: true, color: '#fff', fontSize: 12, fontWeight: 600,
-                    formatter: (p: { value: number }) => (p.value >= 9 ? `${Math.round(p.value)}%` : '') },
+                    formatter: (p: { value: number }) => (p.value >= 4 ? `${Math.round(p.value)}%` : '') },
                 })),
               }
             }}
