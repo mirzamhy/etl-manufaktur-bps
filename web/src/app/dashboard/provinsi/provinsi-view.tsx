@@ -62,6 +62,12 @@ export function ProvinsiView({ rows }: { rows: Row[] }) {
   const rank = ranked.findIndex((r) => r.provinsi === selected) + 1
   const byProd = [...ranked].sort((a, b) => (b.output_per_tk ?? 0) - (a.output_per_tk ?? 0))
   const top3 = ranked.slice(0, 3)
+  // Kurva konsentrasi: porsi tiap provinsi dan porsi kumulatifnya (hanya untuk indikator total).
+  const pareto = total ? (() => {
+    let acc = 0
+    return ranked.map((r) => { const share = ((r[metric] ?? 0) / total) * 100; acc += share; return { provinsi: r.provinsi, share, cum: acc } })
+  })() : []
+  const n80 = pareto.findIndex((d) => d.cum >= 80) + 1
   const above = avg == null ? 0 : ranked.filter((r) => (r[metric] ?? 0) > avg).length
   const headline = !ranked.length ? m.label : total
     ? `${top3.map((r) => titleCase(r.provinsi)).join(', ')} menguasai ${fmtPct((top3.reduce((s, r) => s + (r[metric] ?? 0), 0) / total) * 100, 0)} ${m.label.toLowerCase()}`
@@ -86,6 +92,37 @@ export function ProvinsiView({ rows }: { rows: Row[] }) {
           onSelect={(kode) => { const n = nameOf(kode); if (n && ranked.some((r) => r.provinsi === n)) setPicked(n) }}
           format={(v) => fmt(v)} label={m.label} />
       </Card>
+
+      {total ? (
+        <Card className="mb-4" title={`${n80} dari ${ranked.length} provinsi menghasilkan 80% ${m.label.toLowerCase()}`}
+          desc={`Kurva konsentrasi ${tahun} · batang = porsi tiap provinsi, garis = porsi kumulatif`}>
+          <Chart
+            ariaLabel={`Kurva konsentrasi ${m.label} per provinsi tahun ${tahun}`}
+            height={300}
+            deps={[pareto, n80]}
+            build={(t) => ({
+              ...baseOption(t),
+              tooltip: { ...baseOption(t).tooltip, trigger: 'axis', axisPointer: { type: 'shadow' },
+                formatter: (ps: { dataIndex: number }[]) => {
+                  const d = pareto.at(ps[0].dataIndex)!
+                  return `<b>${titleCase(d.provinsi)}</b> · peringkat ${ps[0].dataIndex + 1}<br>Porsi ${fmtPct(d.share)}<br>Kumulatif <b>${fmtPct(d.cum)}</b>`
+                } },
+              grid: { left: 8, right: 24, top: 40, bottom: 8, containLabel: true },
+              xAxis: { type: 'category', data: pareto.map((d) => titleCase(d.provinsi)), ...axis(t), splitLine: { show: false },
+                axisLabel: { color: t.ink3, fontSize: 10, rotate: 55, interval: 0 } },
+              yAxis: { type: 'value', max: 100, ...axis(t), axisLabel: { color: t.ink3, formatter: '{value}%' } },
+              series: [
+                { name: 'Porsi provinsi', type: 'bar', data: pareto.map((d) => d.share), barMaxWidth: 16,
+                  itemStyle: { color: t.series[0], borderRadius: [3, 3, 0, 0] } },
+                { name: 'Kumulatif', type: 'line', data: pareto.map((d) => d.cum), symbol: 'circle', symbolSize: 5,
+                  lineStyle: { width: 2, color: t.series[1] }, itemStyle: { color: t.series[1] },
+                  markLine: { silent: true, symbol: 'none', animation: false, lineStyle: { color: t.ink3, type: 'dashed', width: 1 },
+                    label: { formatter: '80%', position: 'insideEndTop', color: t.ink2, fontSize: 11 }, data: [{ yAxis: 80 }] } },
+              ],
+            })}
+          />
+        </Card>
+      ) : null}
 
       <div className="grid gap-4 xl:grid-cols-[3fr_2fr]">
         <Card title={`Peringkat ${m.label.toLowerCase()}, ${tahun}`} desc={`${ranked.length} provinsi · satuan ${m.unit} · garis putus-putus = ${m.ratio ? 'rasio nasional' : 'rata-rata per provinsi'}`}>

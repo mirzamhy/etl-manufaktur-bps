@@ -11,6 +11,7 @@ const ICONS: Record<string, string> = {
   flow: 'M4 6h6v4H4zM14 14h6v4h-6zM7 10v4a2 2 0 0 0 2 2h5',
   scatter: 'M4 4v16h16M8 14h.5M11 9h.5M15 12h.5M18 6h.5',
   growth: 'M3 17l6-6 4 4 8-8M15 7h6v6',
+  coins: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 3v9l6.4 6.4',
 }
 
 const ITEMS = [
@@ -18,6 +19,7 @@ const ITEMS = [
   { href: '/dashboard/provinsi', label: 'Provinsi', icon: 'map' },
   { href: '/dashboard/produktivitas', label: 'Produktivitas', icon: 'scatter' },
   { href: '/dashboard/pertumbuhan', label: 'Pertumbuhan', icon: 'growth' },
+  { href: '/dashboard/biaya', label: 'Struktur biaya', icon: 'coins' },
   { href: '/dashboard/skala', label: 'Mikro vs Kecil', icon: 'split' },
   { href: '/dashboard/data', label: 'Eksplorasi data', icon: 'table' },
   { href: '/dashboard/etl', label: 'Status ETL', icon: 'flow', admin: true },

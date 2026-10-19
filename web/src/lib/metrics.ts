@@ -84,3 +84,16 @@ export function fmtMetric(metric: Metric, v: number | null | undefined): string 
 
 export const titleCase = (s: string) =>
   s.toLowerCase().replace(/(^|[\s.(-])([a-z])/g, (_, p, c) => p + c.toUpperCase()).replace(/\bDi\b/, 'DI').replace(/\bDki\b/, 'DKI')
+
+/** Kelompok wilayah berdasarkan dua digit awal kode BPS. */
+export const PULAU = ['Sumatera', 'Jawa', 'Bali-Nusa Tenggara', 'Kalimantan', 'Sulawesi', 'Maluku-Papua'] as const
+export type Pulau = (typeof PULAU)[number]
+export function pulauOf(kode: string): Pulau {
+  const p = Number(kode.slice(0, 1))
+  return p === 1 || kode.startsWith('21') ? 'Sumatera'
+    : p === 3 ? 'Jawa'
+      : p === 5 ? 'Bali-Nusa Tenggara'
+        : p === 6 ? 'Kalimantan'
+          : p === 7 ? 'Sulawesi'
+            : 'Maluku-Papua'
+}

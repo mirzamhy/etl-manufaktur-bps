@@ -5,7 +5,7 @@ import { axis, baseOption, Chart } from '@/components/chart'
 import { Segmented } from '@/components/controls'
 import { Card, Insights, PageHead } from '@/components/ui'
 import {
-  aggregate, bySkala, fmtCompact, fmtDec, fmtInt, fmtPct, fmtRp, groupBy, pct, reported, type SkalaFilter, titleCase, years,
+  aggregate, bySkala, fmtCompact, fmtDec, fmtInt, fmtPct, fmtRp, groupBy, pct, PULAU, pulauOf, reported, type SkalaFilter, titleCase, years,
 } from '@/lib/metrics'
 import type { Row } from '@/lib/types'
 
@@ -27,6 +27,17 @@ export function Overview({ rows }: { rows: Row[] }) {
       .sort((a, b) => b.nilai_output - a.nilai_output)
   }, [rows, tahun, skala])
   const top = provinsi.slice(0, 10)
+
+  // Ringkasan per kelompok pulau, porsi dihitung terhadap jumlah seluruh provinsi.
+  const pulau = useMemo(() => {
+    const prov = rows.filter((r) => !r.nasional && r.tahun === tahun && bySkala(skala)(r))
+    const all = aggregate(prov)
+    return PULAU.map((p) => {
+      const a = aggregate(prov.filter((r) => pulauOf(r.kode) === p))
+      return { pulau: p, ...a, shareUsaha: (a.jumlah_perusahaan / all.jumlah_perusahaan) * 100, shareOutput: (a.nilai_output / all.nilai_output) * 100, shareTk: (a.tenaga_kerja / all.tenaga_kerja) * 100 }
+    })
+  }, [rows, tahun, skala])
+  const pulauTop = [...pulau].sort((a, b) => (b.output_per_tk ?? 0) - (a.output_per_tk ?? 0))
 
   const kpis = [
     { label: 'Jumlah usaha', value: fmtInt(now.jumlah_perusahaan), unit: 'unit', d: pct(now.jumlah_perusahaan, prev?.jumlah_perusahaan) },
@@ -141,6 +152,41 @@ export function Overview({ rows }: { rows: Row[] }) {
         </Card>
         <Insights items={insights} />
       </div>
+
+      <Card className="mt-4" title={`Jawa menampung ${fmtPct(pulau.find((p) => p.pulau === 'Jawa')?.shareUsaha, 0)} usaha; ${pulauTop[0].pulau} paling produktif`}
+        desc={`Ringkasan per kelompok pulau, ${tahun} · batang = porsi output nasional`}>
+        <div className="overflow-x-auto">
+          <table className="tabular w-full min-w-[640px] text-sm">
+            <thead>
+              <tr className="text-left text-xs text-ink-3">
+                <th className="pb-2 font-medium">Wilayah</th>
+                <th className="pb-2 text-right font-medium">Usaha</th>
+                <th className="pb-2 text-right font-medium">Tenaga kerja</th>
+                <th className="w-[34%] pb-2 pl-6 font-medium">Porsi output</th>
+                <th className="pb-2 text-right font-medium">Output per pekerja</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pulau.map((p) => (
+                <tr key={p.pulau} className="border-t border-line">
+                  <td className="py-2.5 font-medium">{p.pulau}</td>
+                  <td className="py-2.5 text-right">{fmtPct(p.shareUsaha)}</td>
+                  <td className="py-2.5 text-right">{fmtPct(p.shareTk)}</td>
+                  <td className="py-2.5 pl-6">
+                    <div className="flex items-center gap-2">
+                      <div className="h-2.5 flex-1 rounded-full bg-surface-2">
+                        <div className="h-2.5 rounded-full bg-accent" style={{ width: `${p.shareOutput}%` }} />
+                      </div>
+                      <span className="w-12 text-right">{fmtPct(p.shareOutput)}</span>
+                    </div>
+                  </td>
+                  <td className="py-2.5 text-right">{fmtDec(p.output_per_tk)} jt Rp</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
     </>
   )
 }
