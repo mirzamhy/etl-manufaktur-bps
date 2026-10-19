@@ -6,7 +6,7 @@ import { Choropleth } from '@/components/choropleth'
 import { Segmented, Select } from '@/components/controls'
 import { Card, Insights, PageHead } from '@/components/ui'
 import {
-  aggregate, bySkala, fmtMetric, fmtPct, groupBy, METRIC, reported, type SkalaFilter, titleCase, years,
+  aggregate, bySkala, fmtMetric, fmtPct, fmtPerBulan, groupBy, METRIC, reported, type SkalaFilter, titleCase, years,
 } from '@/lib/metrics'
 import type { Metric, Row } from '@/lib/types'
 
@@ -75,7 +75,7 @@ export function ProvinsiView({ rows }: { rows: Row[] }) {
   const insights = ranked.length ? [
     <><b className="text-ink">{titleCase(ranked[0].provinsi)}</b> tertinggi untuk {m.label.toLowerCase()} pada {tahun} ({fmt(ranked[0][metric])}), sedangkan {titleCase(ranked.at(-1)!.provinsi)} terendah ({fmt(ranked.at(-1)![metric])}).</>,
     total ? <>Tiga provinsi teratas ({top3.map((r) => titleCase(r.provinsi)).join(', ')}) menguasai <b className="text-ink">{fmtPct((top3.reduce((s, r) => s + (r[metric] ?? 0), 0) / total) * 100)}</b> dari total {ranked.length} provinsi — sebaran industri masih terpusat.</> : <>Rasio dihitung dari total provinsi (output dibagi tenaga kerja/usaha), bukan rata-rata rasio.</>,
-    <>Produktivitas tertinggi (output per tenaga kerja) ada di <b className="text-ink">{titleCase(byProd[0].provinsi)}</b> sebesar {fmtMetric('output_per_tk', byProd[0].output_per_tk)} juta Rp/orang per tahun. Provinsi dengan output terbesar belum tentu yang paling produktif.</>,
+    <>Produktivitas tertinggi (output per tenaga kerja) ada di <b className="text-ink">{titleCase(byProd[0].provinsi)}</b> sebesar {fmtMetric('output_per_tk', byProd[0].output_per_tk)} juta Rp/orang per tahun (≈ {fmtPerBulan(byProd[0].output_per_tk)}). Provinsi dengan output terbesar belum tentu yang paling produktif.</>,
     <>Wilayah pemekaran Papua belum dilaporkan terpisah untuk 2021–2023, sehingga tidak masuk peringkat tahun tersebut.</>,
   ] : []
 
@@ -168,7 +168,7 @@ export function ProvinsiView({ rows }: { rows: Row[] }) {
           <Card title={selected ? titleCase(selected) : '–'} desc={`Peringkat ${rank} dari ${ranked.length} · ${m.label.toLowerCase()} ${tahun}`}>
             <div className="mb-3 grid grid-cols-2 gap-3 text-sm">
               <div><div className="text-xs text-ink-3">{m.label}</div><div className="tabular text-lg font-bold">{fmt(selRow?.[metric])}</div></div>
-              <div><div className="text-xs text-ink-3">Output per tenaga kerja</div><div className="tabular text-lg font-bold">{fmtMetric('output_per_tk', selRow?.output_per_tk)} <span className="text-xs font-medium text-ink-3">jt Rp/tahun</span></div></div>
+              <div><div className="text-xs text-ink-3">Output per tenaga kerja</div><div className="tabular text-lg font-bold">{fmtMetric('output_per_tk', selRow?.output_per_tk)} <span className="text-xs font-medium text-ink-3">jt Rp/tahun</span></div><div className="text-xs text-ink-3">≈ {fmtPerBulan(selRow?.output_per_tk)}</div></div>
             </div>
             <Chart
               ariaLabel={`Tren ${m.label} ${selected} per skala usaha`}

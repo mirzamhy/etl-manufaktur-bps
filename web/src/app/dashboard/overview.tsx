@@ -5,7 +5,7 @@ import { axis, baseOption, Chart } from '@/components/chart'
 import { Segmented } from '@/components/controls'
 import { Card, Insights, PageHead } from '@/components/ui'
 import {
-  aggregate, bySkala, fmtCompact, fmtDec, fmtInt, fmtPct, fmtRp, groupBy, pct, PULAU, pulauOf, reported, type SkalaFilter, titleCase, years,
+  aggregate, bySkala, fmtCompact, fmtDec, fmtInt, fmtPct, fmtPerBulan, fmtRp, groupBy, pct, PULAU, pulauOf, reported, type SkalaFilter, titleCase, years,
 } from '@/lib/metrics'
 import type { Row } from '@/lib/types'
 
@@ -59,7 +59,7 @@ export function Overview({ rows }: { rows: Row[] }) {
 
   return (
     <>
-      <PageHead title="Ringkasan nasional" desc="Gambaran industri manufaktur mikro dan kecil Indonesia. Ubah tahun atau skala untuk memperbarui seluruh angka dan grafik.">
+      <PageHead title="Ringkasan nasional" desc="Industri pengolahan (manufaktur) skala mikro dan kecil, data Survei Industri Mikro dan Kecil BPS. Ubah tahun atau skala untuk memperbarui seluruh angka dan grafik.">
         <Segmented label="Tahun" value={tahun} options={allYears} onChange={setTahun} />
         <Segmented label="Skala usaha" value={skala} options={SKALA} onChange={setSkala} />
       </PageHead>
@@ -139,7 +139,7 @@ export function Overview({ rows }: { rows: Row[] }) {
               tooltip: { ...baseOption(t).tooltip, trigger: 'item',
                 formatter: (p: { dataIndex: number }) => {
                   const d = [...top].reverse()[p.dataIndex]
-                  return `<b>${titleCase(d.provinsi)}</b><br>Output ${fmtRp(d.nilai_output)}<br>Tenaga kerja ${fmtInt(d.tenaga_kerja)}<br>Output/pekerja ${fmtDec(d.output_per_tk)} jt`
+                  return `<b>${titleCase(d.provinsi)}</b><br>Output ${fmtRp(d.nilai_output)}<br>Tenaga kerja ${fmtInt(d.tenaga_kerja)}<br>Output/pekerja ${fmtDec(d.output_per_tk)} jt/tahun (≈ ${fmtPerBulan(d.output_per_tk)})`
                 } },
               grid: { left: 8, right: 76, top: 4, bottom: 4, containLabel: true },
               xAxis: { type: 'value', ...axis(t), axisLabel: { show: false } },
@@ -180,7 +180,7 @@ export function Overview({ rows }: { rows: Row[] }) {
                       <span className="w-12 text-right">{fmtPct(p.shareOutput)}</span>
                     </div>
                   </td>
-                  <td className="py-2.5 text-right">{fmtDec(p.output_per_tk)} jt Rp/thn</td>
+                  <td className="py-2.5 text-right">{fmtDec(p.output_per_tk)} jt Rp/thn<div className="text-xs text-ink-3">≈ {fmtPerBulan(p.output_per_tk)}</div></td>
                 </tr>
               ))}
             </tbody>

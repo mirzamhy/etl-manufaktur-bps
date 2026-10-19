@@ -97,3 +97,7 @@ export function pulauOf(kode: string): Pulau {
           : p === 7 ? 'Sulawesi'
             : 'Maluku-Papua'
 }
+
+/** Nilai tahunan dalam juta rupiah → setara per bulan, mis. "Rp5,5 jt/bulan". */
+export const fmtPerBulan = (jutaPerTahun: number | null | undefined) =>
+  jutaPerTahun == null ? '–' : `Rp${fmtDec(jutaPerTahun / 12, 1)} jt/bulan`
