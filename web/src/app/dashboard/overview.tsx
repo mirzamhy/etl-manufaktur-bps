@@ -69,7 +69,7 @@ export function Overview({ rows }: { rows: Row[] }) {
       </div>
 
       <div className="grid gap-4 lg:grid-cols-[3fr_2fr]">
-        <Card title="Tren nilai produksi" desc={`Total nasional ${label}, ${first.tahun}–${last.tahun}`}>
+        <Card title={`Nilai output ${growth != null && growth >= 0 ? 'naik' : 'turun'} ${fmtPct(Math.abs(growth ?? 0), 0)}, nilai tambah ${pct(last.nilai_tambah, first.nilai_tambah)! >= 0 ? 'naik' : 'turun'} ${fmtPct(Math.abs(pct(last.nilai_tambah, first.nilai_tambah) ?? 0), 0)} sejak ${first.tahun}`} desc={`Total nasional ${label}, ${first.tahun}–${last.tahun}`}>
           <Chart
             ariaLabel="Grafik garis nilai output, input, dan nilai tambah per tahun"
             deps={[tren]}
@@ -117,7 +117,7 @@ export function Overview({ rows }: { rows: Row[] }) {
       </div>
 
       <div className="mt-4 grid gap-4 lg:grid-cols-[3fr_2fr]">
-        <Card title={`10 provinsi dengan output terbesar, ${tahun}`} desc="Arahkan kursor ke batang untuk melihat detail">
+        <Card title={`Lima provinsi teratas menyumbang ${fmtPct(shareTop5, 0)} output nasional`} desc={`10 provinsi dengan output terbesar, ${tahun} · arahkan kursor untuk detail`}>
           <Chart
             ariaLabel={`Grafik batang 10 provinsi dengan nilai output terbesar tahun ${tahun}`}
             height={380}

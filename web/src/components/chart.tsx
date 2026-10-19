@@ -1,15 +1,15 @@
 'use client'
 
-import { BarChart, LineChart } from 'echarts/charts'
+import { BarChart, LineChart, ScatterChart } from 'echarts/charts'
 import { GridComponent, LegendComponent, MarkLineComponent, TooltipComponent } from 'echarts/components'
 import * as echarts from 'echarts/core'
 import { SVGRenderer } from 'echarts/renderers'
 import { useEffect, useRef } from 'react'
 
-echarts.use([BarChart, LineChart, GridComponent, LegendComponent, TooltipComponent, MarkLineComponent, SVGRenderer])
+echarts.use([BarChart, LineChart, ScatterChart, GridComponent, LegendComponent, TooltipComponent, MarkLineComponent, SVGRenderer])
 
 export type Tokens = {
-  ink: string; ink2: string; ink3: string; grid: string; line: string; surface: string; series: string[]; font: string
+  ink: string; ink2: string; ink3: string; grid: string; line: string; surface: string; series: string[]; neg: string; font: string
 }
 
 function readTokens(): Tokens {
@@ -17,7 +17,8 @@ function readTokens(): Tokens {
   const v = (n: string) => s.getPropertyValue(n).trim()
   return {
     ink: v('--ink'), ink2: v('--ink-2'), ink3: v('--ink-3'), grid: v('--grid'), line: v('--line'), surface: v('--surface'),
-    series: [v('--series-1'), v('--series-2'), v('--series-3')],
+    series: [v('--series-1'), v('--series-2'), v('--series-3'), v('--series-4'), v('--series-5'), v('--series-6')],
+    neg: v('--neg'),
     font: getComputedStyle(document.body).fontFamily,
   }
 }
