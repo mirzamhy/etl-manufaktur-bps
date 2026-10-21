@@ -2,9 +2,10 @@
 
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import { Logo } from '@/components/logo'
 import { ThemeToggle } from '@/components/theme-toggle'
 
-const LINKS = [['#data', 'Data'], ['#sumber', 'Sumber'], ['#etl', 'Alur ETL'], ['#teknologi', 'Teknologi'], ['#tim', 'Tim']] as const
+const LINKS = [['#data', 'Data'], ['#sumber', 'Sumber'], ['#etl', 'Alur ETL'], ['#tim', 'Tim']] as const
 
 export function Navbar() {
   const [solid, setSolid] = useState(false)
@@ -18,7 +19,7 @@ export function Navbar() {
     <header className={`fixed inset-x-0 top-0 z-30 transition-colors duration-300 ${solid ? 'border-b border-line bg-bg/85 backdrop-blur-md' : 'border-b border-transparent'}`}>
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-4 md:px-8">
         <Link href="/" className="flex items-center gap-2.5">
-          <span className="grid size-8 place-items-center rounded-lg bg-accent text-xs font-bold text-accent-ink">IK</span>
+          <Logo className="size-8" />
           <span className="text-sm font-semibold max-sm:hidden">Industri Mikro & Kecil</span>
         </Link>
         <nav className="ml-auto flex items-center gap-5 text-sm text-ink-2 max-md:hidden" aria-label="Bagian halaman">

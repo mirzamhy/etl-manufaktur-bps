@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import { Logo } from '@/components/logo'
 import { LoginForm } from './login-form'
 
 export default function LoginPage() {
@@ -6,7 +7,7 @@ export default function LoginPage() {
     <div className="grid min-h-screen md:grid-cols-[1.1fr_1fr]">
       <div className="flex flex-col justify-between gap-10 border-b border-line bg-surface-2 px-4 py-8 md:border-r md:border-b-0 md:p-12">
         <div className="flex items-center gap-2.5">
-          <div className="grid size-9 place-items-center rounded-[9px] bg-accent text-sm font-bold text-accent-ink">IK</div>
+          <Logo />
           <span className="text-sm font-semibold">Integrasi Aplikasi Korporasi</span>
         </div>
         <div>

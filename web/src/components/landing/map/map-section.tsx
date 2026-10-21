@@ -77,7 +77,7 @@ export function MapSection({ years, output, names }: Props) {
       <div className="absolute top-20 right-4 z-10 flex flex-col items-end gap-2 md:top-24 md:right-8">
         <Segmented label="Tahun" value={year} options={years} onChange={setYear} />
         <p className="max-w-56 text-right text-xs text-ink-3">
-          Tinggi balok = nilai output industri mikro & kecil per provinsi. {webgl ? 'Arahkan kursor atau sentuh provinsi; seret untuk memutar.' : ''}
+          Tinggi balok = nilai output per provinsi. {webgl ? 'Seret untuk memutar.' : ''}
         </p>
       </div>
     </>
