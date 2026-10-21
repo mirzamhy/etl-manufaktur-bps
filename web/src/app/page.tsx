@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { EtlFlow } from '@/components/landing/etl-flow'
 import { MapSection } from '@/components/landing/map/map-section'
@@ -18,6 +19,13 @@ const PROCESS = [
   ['Transformasi', 'Nama provinsi diseragamkan, tanda "-" menjadi kosong, titik ribuan dihapus, kolom Mikro/Kecil dijadikan baris.'],
   ['Deduplikasi', 'Baris dengan provinsi, tahun, skala, dan indikator yang sama hanya disimpan satu kali.'],
   ['Sinkronisasi', 'Fakta dimuat dengan insert/update per kunci, sehingga ETL bisa dijalankan ulang tanpa menggandakan data.'],
+]
+
+const TIM = [
+  { nama: 'Yasika Widiyastuti', nim: '164231030', foto: '/tim/yasika.jpg' },
+  { nama: 'Erlina Agustin', nim: '164231035', foto: '/tim/erlina.jpg' },
+  { nama: 'Semaya David Petroes P.', nim: '164231048', foto: '/tim/semaya.jpg' },
+  { nama: 'Mirza Muhyidin', nim: '164231060', foto: '/tim/mirza.jpg' },
 ]
 
 const TECH = [
@@ -146,6 +154,30 @@ export default async function Landing() {
               ))}
             </ul>
           </div>
+        </section>
+
+        {/* Tim */}
+        <section id="tim" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-20 md:px-8">
+          <Reveal>
+            <p className="text-sm font-semibold text-accent">Tim</p>
+            <h2 className="mt-1 text-3xl font-bold tracking-tight md:text-4xl">Dikerjakan oleh empat mahasiswa</h2>
+            <p className="mt-3 max-w-2xl text-ink-2">Tugas mata kuliah Integrasi Aplikasi Korporasi.</p>
+          </Reveal>
+          <ul className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+            {TIM.map((t, i) => (
+              <li key={t.nim}>
+                <Reveal delay={i * 100} className="overflow-hidden rounded-xl border border-line bg-surface shadow-card">
+                  <div className="relative aspect-[4/5] bg-surface-2">
+                    <Image src={t.foto} alt={`Foto ${t.nama}`} fill sizes="(min-width: 768px) 25vw, 50vw" className="object-cover" />
+                  </div>
+                  <div className="p-4">
+                    <div className="font-semibold leading-snug">{t.nama}</div>
+                    <div className="tabular mt-0.5 text-sm text-ink-3">NIM {t.nim}</div>
+                  </div>
+                </Reveal>
+              </li>
+            ))}
+          </ul>
         </section>
 
         {/* Penutup */}
