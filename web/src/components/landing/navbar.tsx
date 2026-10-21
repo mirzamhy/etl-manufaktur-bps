@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { ThemeToggle } from '@/components/theme-toggle'
 
-const LINKS = [['#data', 'Data'], ['#etl', 'Alur ETL'], ['#teknologi', 'Teknologi'], ['#tim', 'Tim']] as const
+const LINKS = [['#data', 'Data'], ['#sumber', 'Sumber'], ['#etl', 'Alur ETL'], ['#teknologi', 'Teknologi'], ['#tim', 'Tim']] as const
 
 export function Navbar() {
   const [solid, setSolid] = useState(false)

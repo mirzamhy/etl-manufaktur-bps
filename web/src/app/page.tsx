@@ -78,12 +78,8 @@ export default async function Landing() {
         </section>
 
         {/* Angka kunci */}
-        <section id="data" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-20 md:px-8">
-          <Reveal>
-            <p className="text-sm font-semibold text-accent">Nasional · {d.latest.tahun}</p>
-            <h2 className="mt-1 max-w-2xl text-3xl font-bold tracking-tight md:text-4xl">Jutaan usaha kecil yang menggerakkan manufaktur</h2>
-          </Reveal>
-          <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
+        <Section id="data" no="01" eyebrow={`Nasional · ${d.latest.tahun}`} title="Jutaan usaha kecil yang menggerakkan manufaktur" first>
+          <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4">
             {stats.map((s, i) => (
               <Reveal key={s.label} delay={i * 120}>
                 <div className="border-t-2 border-accent pt-4">
@@ -93,99 +89,79 @@ export default async function Landing() {
               </Reveal>
             ))}
           </div>
-        </section>
+        </Section>
 
-        {/* Tentang dan sumber data */}
-        <section className="border-y border-line bg-surface">
-          <div className="mx-auto grid max-w-6xl gap-10 px-4 py-20 md:grid-cols-[2fr_3fr] md:px-8">
-            <Reveal>
-              <p className="text-sm font-semibold text-accent">Tentang proyek</p>
-              <h2 className="mt-1 text-3xl font-bold tracking-tight">Lima tabel, tiga format, satu sumber kebenaran</h2>
-              <p className="mt-4 text-ink-2">
-                Data industri manufaktur mikro dan kecil dari Badan Pusat Statistik tersebar di tabel terpisah dengan format
-                berbeda. Proyek ini menyatukannya menjadi data warehouse agar bisa dibandingkan per provinsi, tahun, dan skala usaha.
-              </p>
-            </Reveal>
-            <ul className="grid gap-3 sm:grid-cols-2">
-              {SOURCES.map((s, i) => (
-                <Reveal key={s.id} delay={i * 80}>
-                  <li className="flex h-full items-start justify-between gap-3 rounded-xl border border-line bg-bg p-4">
-                    <div>
-                      <div className="text-xs text-ink-3">Tabel BPS {s.id}</div>
-                      <div className="mt-0.5 font-semibold">{s.name}</div>
-                      <div className="text-xs text-ink-3">{s.unit} · 2021–2025</div>
-                    </div>
-                    <span className="rounded-md bg-accent/12 px-2 py-0.5 text-xs font-bold text-accent">{s.format}</span>
-                  </li>
-                </Reveal>
-              ))}
-            </ul>
-          </div>
-        </section>
+        {/* Sumber data */}
+        <Section id="sumber" no="02" eyebrow="Sumber data" title="Lima tabel, tiga format, satu data warehouse"
+          desc="Data industri manufaktur mikro dan kecil dari Badan Pusat Statistik tersebar di tabel terpisah dengan format berbeda. Proyek ini menyatukannya agar bisa dibandingkan per provinsi, tahun, dan skala usaha.">
+          <ul className="divide-y divide-line border-y border-line">
+            {SOURCES.map((s, i) => (
+              <Reveal key={s.id} delay={i * 60}>
+                <li className="grid grid-cols-[4.5rem_1fr_auto] items-center gap-4 py-4 sm:grid-cols-[6rem_1fr_10rem_auto]">
+                  <span className="tabular text-sm text-ink-3">BPS {s.id}</span>
+                  <span className="font-semibold">{s.name}</span>
+                  <span className="text-sm text-ink-3 max-sm:hidden">{s.unit} · 2021–2025</span>
+                  <span className="w-14 rounded-md bg-accent/12 py-0.5 text-center text-xs font-bold text-accent">{s.format}</span>
+                </li>
+              </Reveal>
+            ))}
+          </ul>
+        </Section>
 
         {/* Alur ETL */}
-        <section id="etl" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-20 md:px-8">
-          <Reveal>
-            <p className="text-sm font-semibold text-accent">Alur ETL</p>
-            <h2 className="mt-1 max-w-2xl text-3xl font-bold tracking-tight md:text-4xl">Dari file mentah ke data warehouse</h2>
-            <p className="mt-3 max-w-2xl text-ink-2">Dikerjakan dengan Pentaho Data Integration dalam delapan transformation. Angka di bawah dibaca langsung dari database.</p>
-          </Reveal>
-          <div className="mt-10"><EtlFlow stages={stages} /></div>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <Section id="etl" no="03" eyebrow="Alur ETL" title="Dari file mentah ke data warehouse"
+          desc="Dikerjakan dengan Pentaho Data Integration dalam delapan transformation. Angka di bawah dibaca langsung dari database.">
+          <EtlFlow stages={stages} />
+          <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {PROCESS.map(([t, desc], i) => (
               <Reveal key={t} delay={i * 100}>
                 <h3 className="font-semibold">{t}</h3>
-                <p className="mt-1 text-sm text-ink-2">{desc}</p>
+                <p className="mt-1.5 text-sm leading-relaxed text-ink-2">{desc}</p>
               </Reveal>
             ))}
           </div>
-        </section>
+        </Section>
 
         {/* Teknologi */}
-        <section id="teknologi" className="border-t border-line bg-surface">
-          <div className="mx-auto max-w-6xl scroll-mt-20 px-4 py-16 md:px-8">
-            <p className="text-sm font-semibold text-accent">Teknologi</p>
-            <ul className="mt-5 grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-5">
-              {TECH.map(([name, role]) => (
-                <li key={name} className="bg-surface p-4">
-                  <div className="font-semibold">{name}</div>
-                  <div className="text-xs text-ink-3">{role}</div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+        <Section id="teknologi" no="04" eyebrow="Teknologi" title="Dibangun dengan perangkat yang umum dipakai">
+          <ul className="grid gap-x-10 sm:grid-cols-2">
+            {TECH.map(([name, role]) => (
+              <li key={name} className="flex items-baseline justify-between gap-4 border-b border-line py-4">
+                <span className="font-semibold">{name}</span>
+                <span className="text-right text-sm text-ink-3">{role}</span>
+              </li>
+            ))}
+          </ul>
+        </Section>
 
         {/* Tim */}
-        <section id="tim" className="mx-auto max-w-6xl scroll-mt-20 px-4 py-20 md:px-8">
-          <Reveal>
-            <p className="text-sm font-semibold text-accent">Tim</p>
-            <h2 className="mt-1 text-3xl font-bold tracking-tight md:text-4xl">Dikerjakan oleh empat mahasiswa</h2>
-            <p className="mt-3 max-w-2xl text-ink-2">Tugas mata kuliah Integrasi Aplikasi Korporasi.</p>
-          </Reveal>
-          <ul className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+        <Section id="tim" no="05" eyebrow="Tim" title="Dikerjakan oleh empat mahasiswa" desc="Tugas mata kuliah Integrasi Aplikasi Korporasi.">
+          <ul className="grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-4 md:gap-x-6">
             {TIM.map((t, i) => (
               <li key={t.nim}>
-                <Reveal delay={i * 100} className="overflow-hidden rounded-xl border border-line bg-surface shadow-card">
-                  <div className="relative aspect-[4/5] bg-surface-2">
-                    <Image src={t.foto} alt={`Foto ${t.nama}`} fill sizes="(min-width: 768px) 25vw, 50vw" className="object-cover" />
+                <Reveal delay={i * 100} className="group">
+                  <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-surface-2">
+                    <Image src={t.foto} alt={`Foto ${t.nama}`} fill sizes="(min-width: 768px) 25vw, 50vw"
+                      className="object-cover grayscale-[85%] transition duration-500 group-hover:scale-[1.03] group-hover:grayscale-0 motion-reduce:transition-none" />
                   </div>
-                  <div className="p-4">
-                    <div className="font-semibold leading-snug">{t.nama}</div>
-                    <div className="tabular mt-0.5 text-sm text-ink-3">NIM {t.nim}</div>
-                  </div>
+                  <div className="mt-3 font-semibold leading-snug">{t.nama}</div>
+                  <div className="tabular mt-0.5 text-sm text-ink-3">NIM {t.nim}</div>
                 </Reveal>
               </li>
             ))}
           </ul>
-        </section>
+        </Section>
 
         {/* Penutup */}
-        <section className="mx-auto max-w-6xl px-4 py-20 text-center md:px-8">
-          <h2 className="mx-auto max-w-xl text-3xl font-bold tracking-tight md:text-4xl">Jelajahi datanya per provinsi, tahun, dan skala</h2>
-          <p className="mx-auto mt-3 max-w-lg text-ink-2">Dashboard berisi grafik interaktif, perbandingan Mikro vs Kecil, tabel lengkap yang bisa diunduh, dan status ETL.</p>
-          <Link href="/dashboard" className="mt-8 inline-block rounded-lg bg-accent px-6 py-3 text-sm font-semibold text-accent-ink hover:brightness-105">Masuk dashboard</Link>
-        </section>
+        <div className="mx-auto max-w-6xl px-4 pb-24 md:px-8">
+          <Reveal className="flex flex-col items-start justify-between gap-6 rounded-2xl bg-surface-2 p-8 md:flex-row md:items-center md:p-10">
+            <div>
+              <h2 className="max-w-xl text-2xl font-bold tracking-tight md:text-3xl">Jelajahi datanya per provinsi, tahun, dan skala</h2>
+              <p className="mt-2 max-w-lg text-ink-2">Peta, produktivitas, pertumbuhan, struktur biaya, dan tabel lengkap yang bisa diunduh.</p>
+            </div>
+            <Link href="/dashboard" className="shrink-0 rounded-lg bg-accent px-6 py-3 text-sm font-semibold text-accent-ink hover:brightness-105">Masuk dashboard</Link>
+          </Reveal>
+        </div>
       </main>
 
       <footer className="border-t border-line">
@@ -200,5 +176,23 @@ export default async function Landing() {
         </div>
       </footer>
     </>
+  )
+}
+
+/** Kerangka section seragam: nomor + label, judul, deskripsi, lalu isi. */
+function Section({ id, no, eyebrow, title, desc, first, children }: {
+  id: string; no: string; eyebrow: string; title: string; desc?: string; first?: boolean; children: React.ReactNode
+}) {
+  return (
+    <section id={id} className="mx-auto max-w-6xl scroll-mt-20 px-4 md:px-8">
+      <div className={`py-20 md:py-24 ${first ? '' : 'border-t border-line'}`}>
+        <Reveal>
+          <p className="text-sm font-semibold text-accent"><span className="tabular text-ink-3">{no}</span> · {eyebrow}</p>
+          <h2 className="mt-2 max-w-2xl text-3xl font-bold tracking-tight md:text-4xl">{title}</h2>
+          {desc && <p className="mt-3 max-w-2xl leading-relaxed text-ink-2">{desc}</p>}
+        </Reveal>
+        <div className="mt-10 md:mt-12">{children}</div>
+      </div>
+    </section>
   )
 }

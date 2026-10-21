@@ -41,7 +41,8 @@ const FORMAT = {
 
 export function CountUp({ value, format }: { value: number; format: keyof typeof FORMAT }) {
   const [ref, visible] = useVisible<HTMLSpanElement>()
-  const [shown, setShown] = useState(0)
+  // Angka akhir tampil sejak awal; animasi hitung naik hanya berjalan saat terlihat.
+  const [shown, setShown] = useState(value)
   useEffect(() => {
     if (!visible) return
     const duration = matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 1400
